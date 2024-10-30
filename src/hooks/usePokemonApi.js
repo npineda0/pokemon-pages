@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from "react";
 const PokemonContext = createContext();
 
 export function PokemonProvider({ children }) {
-  const [pokemonState, setPokemonState] = useState({ totalPokemonCount: 0 });
+  const [pokemonState, setPokemonState] = useState({ totalPokemonCount: 0, randomPokemon: [], });
 
     /**
    * Fetches the pokemon api with a limit of 1 to minimize api call time. Uses count returned to determine the total number of pokemon stored on the api.
@@ -27,6 +27,7 @@ export function PokemonProvider({ children }) {
 
     while (pokeIndex < limit) {
       const randId = parseInt(Math.random() * pokemonState.totalPokemonCount) + 1;
+      
       if (!pokemonIds[randId]) {
         const pokeRequest = await fetch(
           `https://pokeapi.co/api/v2/pokemon/${randId}`

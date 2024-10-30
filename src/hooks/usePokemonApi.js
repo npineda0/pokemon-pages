@@ -27,10 +27,15 @@ export function PokemonProvider({ children }) {
 
     while (pokeIndex < limit) {
       const randId = parseInt(Math.random() * pokemonState.totalPokemonCount) + 1;
-      
+
       if (!pokemonIds[randId]) {
+        let idToUse = randId;
+        //handle ids above 1000 
+        if (idToUse > 1000) {
+          idToUse = "10" + String(idToUse).slice(1);
+        }
         const pokeRequest = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${randId}`
+          `https://pokeapi.co/api/v2/pokemon/${idToUse}`
         );
         pokemonIds[randId] = await pokeRequest.json();
         pokeIndex++;
@@ -43,8 +48,23 @@ export function PokemonProvider({ children }) {
     });
   }
 
+  //pokemon INFO
+  function getPokemonQuickInfo(pokeData) {
+    return { 
+      name: pokeData.name, 
+      id: pokeData.id, 
+      img: pokeData.sprites.front_default,
+      types: pokeData.types,
+    }
+  }
+
   // modified
-  const pokemonValues = { ...pokemonState, getNumberOfPokemon, getRandomPokemon };
+  const pokemonValues = { 
+    ...pokemonState, 
+    getNumberOfPokemon, 
+    getRandomPokemon,
+    getPokemonQuickInfo,
+  };
 
     return (
         <PokemonContext.Provider value={pokemonValues}>

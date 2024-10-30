@@ -12,24 +12,31 @@ export default function Home() {
       pokeData.getNumberOfPokemon()
     }
     if (!pokeData.randomPokemon.length) {
-      pokeData.getRandomPokemon();
+      pokeData.getRandomPokemon(3);
     }
   }, [pokeData]);
 
   //console.log(pokeData);
 
   //generate random pokemon api 
-  const appState = usePokemonApi();
-
+  const randomPokemonListJsx = pokeData.randomPokemon.map(function (pokemon) {
+    const quickInfo = pokeData.getPokemonQuickInfo(pokemon);
+    return (
+      <PokemonCard
+        key={`poke-card-${quickInfo.id}`}
+        name={quickInfo.name}
+        img={quickInfo.img}
+        types={quickInfo.types}
+      />
+    );
+  });
 
   return (
     <main className={homeStyles.mainContent}>
       <h1 >Pokemons</h1>
       {/* display random pokemon */}
       <section>
-        <PokemonCard />
-        <PokemonCard />
-        <PokemonCard />
+        {randomPokemonListJsx}
       </section>
     </main>
   )

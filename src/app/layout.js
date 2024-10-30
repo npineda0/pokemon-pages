@@ -1,6 +1,6 @@
 import "./globals.css";
 import Nav from "@/components/Nav";
-import { PokemonProvider } from "";
+import { PokemonProvider } from "@/hooks/usePokemonApi";
 
 export const metadata = {
   title: "Create Next App",

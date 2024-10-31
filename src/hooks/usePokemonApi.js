@@ -34,12 +34,16 @@ export function PokemonProvider({ children }) {
         if (idToUse > 1000) {
           idToUse = "10" + String(idToUse).slice(1);
         }
-        const pokeRequest = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${idToUse}`
-        );
-        pokemonIds[randId] = await pokeRequest.json();
-        pokeIndex++;
-      }
+        try {
+          const pokeRequest = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${idToUse}`
+          );
+          pokemonIds[randId] = await pokeRequest.json();
+          pokeIndex++;
+        } catch (e) {
+          console.warn(e);
+        }
+      } 
     }
 
     setPokemonState({

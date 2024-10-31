@@ -2,6 +2,7 @@
 
 import searchStyles from "./search.module.css";
 import { useEffect, useState } from "react";
+import PokemonCard from "@/components/Pokemon/PokemonCard";
 
 // POKEMON DATA 
 /**
@@ -42,21 +43,21 @@ export default function Pokemon() {
         }
     }
 
-    async function searchForPokemonByEggGroup() {
-        try{
-            const rawData = await fetch(`https://pokeapi.co/api/v2/egg-group/${searchTerm}`);
-            const pokeDataFormatted = await rawData.json();
+    // async function searchForPokemonByEggGroup() {
+    //     try{
+    //         const rawData = await fetch(`https://pokeapi.co/api/v2/egg-group/${searchTerm}`);
+    //         const pokeDataFormatted = await rawData.json();
             
-            setPokemon(pokeDataFormatted);
-        } catch (error) {
-            setPokemon({name: searchTerm, pokemon_species: []})
-        }
-    }
+    //         setPokemon(pokeDataFormatted);
+    //     } catch (error) {
+    //         setPokemon({name: searchTerm, pokemon_species: []})
+    //     }
+    // }
 
     return(
         <main>
             {/* can only have one top level element */}
-            <h1>Pokemon Page</h1>
+            <h1>Pokemon Search</h1>
             <div className={searchStyles.search}>
                 <input 
                     type="search"
@@ -67,8 +68,11 @@ export default function Pokemon() {
                 />
                 <input type="button" value="Search" onClick={() => { searchForPokemonByName(); searchForPokemonByEggGroup();}}/>
             </div>
-            <h3>{pokemon.name}</h3>
-            <img src={pokemon.sprites.front_default}/>
+            <PokemonCard
+                name={pokemon.name}
+                img={pokemon.sprites.front_default}
+                types={pokemon.types}
+            />
         </main>
     );
 }

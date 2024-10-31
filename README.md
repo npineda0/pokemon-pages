@@ -9,5 +9,5 @@ Pages:
 - Pokemon information page displays further information about pokemon
 - Favorites page displays pokemon that the user marked as favorite
 
-Vercel: 
+Vercel: https://pokemon-pages-qyhl41knd-naila-lugardos-projects.vercel.app 
 
